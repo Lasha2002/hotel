@@ -1,28 +1,31 @@
 package com.example.hotel.controller;
-
-import com.example.hotel.classes.Person;
+import com.example.hotel.personDTO.GetPersonDTO;
+import com.example.hotel.personDTO.PersonDTO;
+import com.example.hotel.personDTO.PersonResponseDTO;
 import com.example.hotel.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.List;
 @RestController
 @RequestMapping("/users")
 public class PersonController {
+
     @Autowired
     private PersonService personService;
-
     @PostMapping
-    public Person createPerson(@RequestBody Person person) {
-        return personService.savePerson(person);
+    public PersonDTO createPerson(@RequestBody PersonDTO personDTO) {
+        return personService.savePerson(personDTO);
     }
-
-    @GetMapping("/{id}")
-    public Person getPerson(@PathVariable Long id) {
-        return personService.getPerson(id);
+    @GetMapping("/get/{id}")
+    public GetPersonDTO getPerson(@PathVariable Long id) {
+        return personService.getPersonById(id);
     }
-
-    @DeleteMapping("/{id}")
+    @GetMapping("/all")
+    public List<PersonResponseDTO> getAllPersons() {
+        return personService.getAllPersons();
+    }
+    @DeleteMapping("/delete/{id}")
     public void deletePerson(@PathVariable Long id) {
-        personService.deletePerson(id);
+        personService.deletePersonById(id);
     }
 }
